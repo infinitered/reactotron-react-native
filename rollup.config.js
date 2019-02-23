@@ -1,20 +1,21 @@
-import resolve from 'rollup-plugin-node-resolve'
-import babel from 'rollup-plugin-babel'
-import replace from "rollup-plugin-replace"
-
-const coreClientVersion = require('./package.json').version
+import resolve from "rollup-plugin-node-resolve"
+import babel from "rollup-plugin-babel"
+import filesize from "rollup-plugin-filesize"
+import minify from 'rollup-plugin-babel-minify';
 
 export default {
-  input: 'src/reactotron-core-client.ts',
+  input: "src/reactotron-react-native.ts",
   output: {
-    file: 'dist/index.js',
-    format: 'cjs'
+    file: "dist/index.js",
+    format: "cjs",
   },
   plugins: [
-    resolve({ extensions: ['.ts'] }),
-    replace({
-      REACTOTRON_CORE_CLIENT_VERSION: coreClientVersion,
+    resolve({ extensions: [".ts", ".tsx"] }),
+    babel({ extensions: [".ts", ".tsx"], runtimeHelpers: true }),
+    minify({
+      comments: false,
     }),
-    babel({ extensions: ['.ts'], runtimeHelpers: true })
+    filesize(),
   ],
+  external: ["reactotron-core-client", "react",  "react-native", "react-native/Libraries/Network/XHRInterceptor"],
 }

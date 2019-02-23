@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": false,
+    "jsx": "react-native",
     "declaration": true,
     "declarationDir": "dist/types",
     "emitDeclarationOnly": true,
@@ -14,7 +15,10 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "sourceMap": true,
-    "target": "es5"
+    "target": "es5",
+    "lib": ["dom"],
+    "types": ["node", "react", "react-native", "jest"],
+    "skipLibCheck": true // Hopefully temporary.
   },
   "exclude": ["node_modules"],
   "include": ["src"]
