@@ -1,7 +1,7 @@
 import resolve from "rollup-plugin-node-resolve"
 import babel from "rollup-plugin-babel"
 import filesize from "rollup-plugin-filesize"
-import minify from 'rollup-plugin-babel-minify';
+import minify from "rollup-plugin-babel-minify"
 
 export default {
   input: "src/reactotron-react-native.ts",
@@ -17,5 +17,10 @@ export default {
     }),
     filesize(),
   ],
-  external: ["reactotron-core-client", "react",  "react-native", "react-native/Libraries/Network/XHRInterceptor"],
+  external: [
+    "reactotron-core-client",
+    "react",
+    "react-native",
+    "react-native/Libraries/Network/XHRInterceptor",
+  ],
 }
