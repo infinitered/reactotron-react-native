@@ -12,9 +12,11 @@ export default {
   plugins: [
     resolve({ extensions: [".ts", ".tsx"] }),
     babel({ extensions: [".ts", ".tsx"], runtimeHelpers: true }),
-    minify({
-      comments: false,
-    }),
+    process.env.NODE_ENV === "production"
+      ? minify({
+          comments: false,
+        })
+      : null,
     filesize(),
   ],
   external: [
@@ -22,5 +24,6 @@ export default {
     "react",
     "react-native",
     "react-native/Libraries/Network/XHRInterceptor",
+    "rn-host-detect",
   ],
 }
