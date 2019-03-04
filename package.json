@@ -3,7 +3,7 @@
   "version": "3.2.0",
   "description": "A development tool to explore, inspect, and diagnose your React Native apps.",
   "author": "Infinite Red",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/infinitered/reactotron/issues"
   },
