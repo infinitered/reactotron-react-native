@@ -1,10 +1,9 @@
-import { Platform, AsyncStorage, NativeModules } from "react-native"
+import { Platform, NativeModules } from "react-native"
 import { createClient, Reactotron } from "reactotron-core-client"
 import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
-import asyncStorage, { AsyncStorageOptions } from "./plugins/asyncStorage"
 import overlay from "./plugins/overlay"
 import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
 import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlobalErrors"
@@ -13,7 +12,7 @@ import storybook from "./plugins/storybook"
 
 const constants = NativeModules.PlatformConstants || {}
 
-const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
+let tempClientId = null
 
 const DEFAULTS = {
   createSocket: (path: string) => new WebSocket(path), // eslint-disable-line
@@ -39,10 +38,13 @@ const DEFAULTS = {
     ...getReactNativeDimensions(),
   },
   getClientId: async () => {
-    return AsyncStorage.getItem(REACTOTRON_ASYNC_CLIENT_ID)
+    debugger
+    return tempClientId
   },
   setClientId: (clientId: string) => {
-    return AsyncStorage.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
+    debugger
+    tempClientId = clientId
+    return Promise.resolve()
   },
   proxyHack: true,
 }
@@ -51,7 +53,6 @@ export interface UseReactNativeOptions {
   errors?: TrackGlobalErrorsOptions | boolean
   editor?: OpenInEditorOptions | boolean
   overlay?: boolean
-  asyncStorage?: AsyncStorageOptions | boolean
   networking?: NetworkingOptions | boolean
   storybook?: boolean
 }
@@ -79,10 +80,6 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
     reactotron.use(overlay())
   }
 
-  if (options.asyncStorage !== false) {
-    reactotron.use(asyncStorage(getPluginOptions(options.asyncStorage)))
-  }
-
   if (options.networking !== false) {
     reactotron.use(networking(getPluginOptions(options.networking)))
   }
@@ -94,13 +91,6 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
   return reactotron
 }
 
-export {
-  trackGlobalErrors,
-  openInEditor,
-  overlay,
-  asyncStorage,
-  networking,
-  storybook,
-}
+export { trackGlobalErrors, openInEditor, overlay, networking, storybook }
 
 export default reactotron
