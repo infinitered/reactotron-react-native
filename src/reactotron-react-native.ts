@@ -39,11 +39,9 @@ const DEFAULTS = {
     ...getReactNativeDimensions(),
   },
   getClientId: async () => {
-    debugger
     return tempClientId
   },
   setClientId: (clientId: string) => {
-    debugger
     tempClientId = clientId
     return Promise.resolve()
   },
@@ -60,7 +58,7 @@ export interface UseReactNativeOptions {
 }
 
 const reactotron: Reactotron & {
-  useReactNative?: (options: UseReactNativeOptions) => Reactotron
+  useReactNative?: (options?: UseReactNativeOptions) => Reactotron
   overlay?: (App: React.ReactNode) => void
   storybookSwitcher?: (App: React.ReactNode) => void
 } = createClient(DEFAULTS)

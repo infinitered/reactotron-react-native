@@ -1,4 +1,3 @@
-import { AsyncStorage } from "react-native"
 import { Reactotron } from "reactotron-core-client"
 
 export interface AsyncStorageOptions {
@@ -9,10 +8,10 @@ const PLUGIN_DEFAULTS: AsyncStorageOptions = {
   ignore: [],
 }
 
-export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
+export default asyncStorage => (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
-  const ignore = config['ignore'] || PLUGIN_DEFAULTS.ignore
+  const ignore = config["ignore"] || PLUGIN_DEFAULTS.ignore
 
   let swizzSetItem
   let swizzRemoveItem
@@ -24,13 +23,13 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
   let isSwizzled = false
 
   const sendToReactotron = (action: string, data?: any) => {
-    reactotron.send('asyncStorage.mutation', { action, data })
+    reactotron.send("asyncStorage.mutation", { action, data })
   }
 
   const setItem = async (key, value, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron('setItem', { key, value })
+        sendToReactotron("setItem", { key, value })
       }
     } catch (e) {}
     return swizzSetItem(key, value, callback)
@@ -39,7 +38,7 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
   const removeItem = async (key, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron('removeItem', { key })
+        sendToReactotron("removeItem", { key })
       }
     } catch (e) {}
     return swizzRemoveItem(key, callback)
@@ -48,7 +47,7 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
   const mergeItem = async (key, value, callback) => {
     try {
       if (ignore.indexOf(key) < 0) {
-        sendToReactotron('mergeItem', { key, value })
+        sendToReactotron("mergeItem", { key, value })
       }
     } catch (e) {}
     return swizzMergeItem(key, value, callback)
@@ -56,7 +55,7 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
 
   const clear = async callback => {
     try {
-      sendToReactotron('clear')
+      sendToReactotron("clear")
     } catch (e) {}
     return swizzClear(callback)
   }
@@ -67,7 +66,7 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
         pair => pair && pair[0] && ignore.indexOf(pair[0]) < 0
       )
       if (shippablePairs.length > 0) {
-        sendToReactotron('multiSet', { pairs: shippablePairs })
+        sendToReactotron("multiSet", { pairs: shippablePairs })
       }
     } catch (e) {}
     return swizzMultiSet(pairs, callback)
@@ -77,7 +76,7 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
     try {
       const shippableKeys = (keys || []).filter(key => ignore.indexOf(key) < 0)
       if (shippableKeys.length > 0) {
-        sendToReactotron('multiRemove', { keys: shippableKeys })
+        sendToReactotron("multiRemove", { keys: shippableKeys })
       }
     } catch (e) {}
     return swizzMultiRemove(keys, callback)
@@ -89,7 +88,7 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
         pair => pair && pair[0] && ignore.indexOf(pair[0]) < 0
       )
       if (shippablePairs.length > 0) {
-        sendToReactotron('multiMerge', { pairs: shippablePairs })
+        sendToReactotron("multiMerge", { pairs: shippablePairs })
       }
     } catch (e) {}
     return swizzMultiMerge(pairs, callback)
@@ -101,26 +100,26 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
   const trackAsyncStorage = () => {
     if (isSwizzled) return
 
-    swizzSetItem = AsyncStorage.setItem
-    AsyncStorage.setItem = setItem
+    swizzSetItem = asyncStorage.setItem
+    asyncStorage.setItem = setItem
 
-    swizzRemoveItem = AsyncStorage.removeItem
-    AsyncStorage.removeItem = removeItem
+    swizzRemoveItem = asyncStorage.removeItem
+    asyncStorage.removeItem = removeItem
 
-    swizzMergeItem = AsyncStorage.mergeItem
-    AsyncStorage.mergeItem = mergeItem
+    swizzMergeItem = asyncStorage.mergeItem
+    asyncStorage.mergeItem = mergeItem
 
-    swizzClear = AsyncStorage.clear
-    AsyncStorage.clear = clear
+    swizzClear = asyncStorage.clear
+    asyncStorage.clear = clear
 
-    swizzMultiSet = AsyncStorage.multiSet
-    AsyncStorage.multiSet = multiSet
+    swizzMultiSet = asyncStorage.multiSet
+    asyncStorage.multiSet = multiSet
 
-    swizzMultiRemove = AsyncStorage.multiRemove
-    AsyncStorage.multiRemove = multiRemove
+    swizzMultiRemove = asyncStorage.multiRemove
+    asyncStorage.multiRemove = multiRemove
 
-    swizzMultiMerge = AsyncStorage.multiMerge
-    AsyncStorage.multiMerge = multiMerge
+    swizzMultiMerge = asyncStorage.multiMerge
+    asyncStorage.multiMerge = multiMerge
 
     isSwizzled = true
   }
@@ -128,13 +127,13 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
   const untrackAsyncStorage = () => {
     if (!isSwizzled) return
 
-    AsyncStorage.setItem = swizzSetItem
-    AsyncStorage.removeItem = swizzRemoveItem
-    AsyncStorage.mergeItem = swizzMergeItem
-    AsyncStorage.clear = swizzClear
-    AsyncStorage.multiSet = swizzMultiSet
-    AsyncStorage.multiRemove = swizzMultiRemove
-    AsyncStorage.multiMerge = swizzMultiMerge
+    asyncStorage.setItem = swizzSetItem
+    asyncStorage.removeItem = swizzRemoveItem
+    asyncStorage.mergeItem = swizzMergeItem
+    asyncStorage.clear = swizzClear
+    asyncStorage.multiSet = swizzMultiSet
+    asyncStorage.multiRemove = swizzMultiRemove
+    asyncStorage.multiMerge = swizzMultiMerge
 
     isSwizzled = false
   }
@@ -145,7 +144,7 @@ export default (options: AsyncStorageOptions) => (reactotron: Reactotron) => {
   return {
     features: {
       trackAsyncStorage,
-      untrackAsyncStorage
-    }
+      untrackAsyncStorage,
+    },
   }
 }
