@@ -9,6 +9,7 @@ import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
 import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlobalErrors"
 import networking, { NetworkingOptions } from "./plugins/networking"
 import storybook from "./plugins/storybook"
+import devTools from "./plugins/devTools"
 
 const constants = NativeModules.PlatformConstants || {}
 
@@ -55,6 +56,7 @@ export interface UseReactNativeOptions {
   overlay?: boolean
   networking?: NetworkingOptions | boolean
   storybook?: boolean
+  devTools?: boolean
 }
 
 const reactotron: Reactotron & {
@@ -88,9 +90,13 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
     reactotron.use(storybook())
   }
 
+  if (options.devTools !== false) {
+    reactotron.use(devTools())
+  }
+
   return reactotron
 }
 
-export { trackGlobalErrors, openInEditor, overlay, networking, storybook }
+export { trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
 
 export default reactotron

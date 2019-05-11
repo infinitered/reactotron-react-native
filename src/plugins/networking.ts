@@ -1,5 +1,6 @@
 import XHRInterceptor from 'react-native/Libraries/Network/XHRInterceptor'
-import { Reactotron } from 'reactotron-core-client';
+import queryString from 'query-string'
+import { Reactotron } from 'reactotron-core-client'
 
 /**
  * Don't include the response bodies for images by default.
@@ -66,6 +67,13 @@ export default (pluginConfig: NetworkingOptions = {}) => (reactotron: Reactotron
       return
     }
 
+    let params = null;
+    const queryParamIdx = url ? url.indexOf('?') : -1
+
+    if (queryParamIdx > -1) {
+      params = queryString.parse(url.substr(queryParamIdx))
+    }
+
     // fetch and clear the request data from the cache
     const rid = xhr._trackingName
     const cachedRequest = requestCache[rid] || {}
@@ -77,7 +85,8 @@ export default (pluginConfig: NetworkingOptions = {}) => (reactotron: Reactotron
       url: url || cachedRequest.xhr._url,
       method: xhr._method || null,
       data,
-      headers: xhr._headers || null
+      headers: xhr._headers || null,
+      params
     }
 
     // what type of content is this?
@@ -113,7 +122,7 @@ export default (pluginConfig: NetworkingOptions = {}) => (reactotron: Reactotron
 
     // prepare the right body to send
     if (useRealResponse) {
-      if (type === 'blob' && typeof FileReader !== 'undefined') {
+      if (type === 'blob' && typeof FileReader !== 'undefined' && response) {
         // Disable reason: FileReader should be in global scope since RN 0.54
         // eslint-disable-next-line no-undef
         const bReader = new FileReader()

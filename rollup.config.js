@@ -22,6 +22,7 @@ const EXTERNALS = [
   "react-native",
   "react-native/Libraries/Network/XHRInterceptor",
   "rn-host-detect",
+  "query-string",
 ]
 
 export default [
