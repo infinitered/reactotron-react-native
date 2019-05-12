@@ -21,7 +21,6 @@ const EXTERNALS = [
   "react",
   "react-native",
   "react-native/Libraries/Network/XHRInterceptor",
-  "@react-native-community/async-storage",
   "rn-host-detect",
   "query-string",
 ]
@@ -31,24 +30,6 @@ export default [
     input: "src/reactotron-react-native.ts",
     output: {
       file: "dist/index.js",
-      format: "cjs",
-    },
-    plugins: getPlugins(),
-    external: EXTERNALS,
-  },
-  {
-    input: "src/useAsyncStorageClientId.ts",
-    output: {
-      file: "dist/useAsyncStorageClientId.js",
-      format: "cjs",
-    },
-    plugins: getPlugins(),
-    external: EXTERNALS,
-  },
-  {
-    input: "src/useLegacyAsyncStorageClientId.ts",
-    output: {
-      file: "dist/useLegacyAsyncStorageClientId.js",
       format: "cjs",
     },
     plugins: getPlugins(),

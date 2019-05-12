@@ -4,6 +4,7 @@ import getHost from "rn-host-detect"
 
 import getReactNativeVersion from "./helpers/getReactNativeVersion"
 import getReactNativeDimensions from "./helpers/getReactNativeDimensions"
+import asyncStorage, { AsyncStorageOptions } from "./plugins/asyncStorage"
 import overlay from "./plugins/overlay"
 import openInEditor, { OpenInEditorOptions } from "./plugins/openInEditor"
 import trackGlobalErrors, { TrackGlobalErrorsOptions } from "./plugins/trackGlobalErrors"
@@ -12,6 +13,8 @@ import storybook from "./plugins/storybook"
 import devTools from "./plugins/devTools"
 
 const constants = NativeModules.PlatformConstants || {}
+
+const REACTOTRON_ASYNC_CLIENT_ID = "@REACTOTRON/clientId"
 
 let tempClientId = null
 
@@ -38,10 +41,18 @@ const DEFAULTS = {
     reactNativeVersion: getReactNativeVersion(),
     ...getReactNativeDimensions(),
   },
-  getClientId: async () => {
-    return tempClientId
+  getClientId: () => {
+    if (reactotron.asyncStorageHandler) {
+      return reactotron.asyncStorageHandler.getItem(REACTOTRON_ASYNC_CLIENT_ID)
+    }
+
+    return new Promise(resolve => resolve(tempClientId))
   },
   setClientId: (clientId: string) => {
+    if (reactotron.asyncStorageHandler) {
+      return reactotron.asyncStorageHandler.setItem(REACTOTRON_ASYNC_CLIENT_ID, clientId)
+    }
+
     tempClientId = clientId
     return Promise.resolve()
   },
@@ -52,6 +63,7 @@ export interface UseReactNativeOptions {
   errors?: TrackGlobalErrorsOptions | boolean
   editor?: OpenInEditorOptions | boolean
   overlay?: boolean
+  asyncStorage?: AsyncStorageOptions | boolean
   networking?: NetworkingOptions | boolean
   storybook?: boolean
   devTools?: boolean
@@ -61,6 +73,8 @@ const reactotron: Reactotron & {
   useReactNative?: (options?: UseReactNativeOptions) => Reactotron
   overlay?: (App: React.ReactNode) => void
   storybookSwitcher?: (App: React.ReactNode) => void
+  asyncStorageHandler?: any
+  setAsyncStorageHandler?: (asyncStorage: any) => void
 } = createClient(DEFAULTS)
 
 function getPluginOptions<T>(options?: T | boolean): T {
@@ -80,6 +94,10 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
     reactotron.use(overlay())
   }
 
+  if (options.asyncStorage !== false) {
+    reactotron.use(asyncStorage(getPluginOptions(options.asyncStorage)))
+  }
+
   if (options.networking !== false) {
     reactotron.use(networking(getPluginOptions(options.networking)))
   }
@@ -93,6 +111,10 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
   }
 
   return reactotron
+}
+
+reactotron.setAsyncStorageHandler = asyncStorage => {
+  reactotron.asyncStorageHandler = asyncStorage
 }
 
 export { trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
