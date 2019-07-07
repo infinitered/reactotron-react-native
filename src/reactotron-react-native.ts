@@ -1,4 +1,5 @@
-import { Platform, AsyncStorage, NativeModules } from "react-native"
+import { Platform, NativeModules } from "react-native"
+import AsyncStorage from '@react-native-community/async-storage'
 import { createClient, Reactotron } from "reactotron-core-client"
 import getHost from "rn-host-detect"
 
