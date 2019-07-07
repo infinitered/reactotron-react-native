@@ -1,5 +1,6 @@
 import resolve from "rollup-plugin-node-resolve"
 import babel from "rollup-plugin-babel"
+import flow from "rollup-plugin-flow"
 import filesize from "rollup-plugin-filesize"
 import minify from "rollup-plugin-babel-minify"
 
@@ -18,6 +19,7 @@ export default {
         })
       : null,
     filesize(),
+    flow({ all: true }),
   ],
   external: [
     "reactotron-core-client",
