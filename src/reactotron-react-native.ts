@@ -69,13 +69,17 @@ export interface UseReactNativeOptions {
   devTools?: boolean
 }
 
-const reactotron: Reactotron & {
-  useReactNative?: (options?: UseReactNativeOptions) => Reactotron
-  overlay?: (App: React.ReactNode) => void
-  storybookSwitcher?: (App: React.ReactNode) => void
+export interface ReactotronReactNative {
+  useReactNative: (
+    options: UseReactNativeOptions
+  ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
+  overlay: (App: React.ReactNode) => void
+  storybookSwitcher: (App: React.ReactNode) => void
   asyncStorageHandler?: any
   setAsyncStorageHandler?: (asyncStorage: any) => void
-} = createClient(DEFAULTS)
+}
+
+const reactotron: Reactotron<ReactotronReactNative> & ReactotronReactNative = createClient(DEFAULTS)
 
 function getPluginOptions<T>(options?: T | boolean): T {
   return typeof options === "object" ? options : null
