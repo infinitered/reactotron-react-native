@@ -60,7 +60,7 @@ export interface UseReactNativeOptions {
 
 export interface ReactotronReactNative {
   useReactNative: (
-    options: UseReactNativeOptions
+    options?: UseReactNativeOptions
   ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
   overlay: (App: React.ReactNode) => void
   storybookSwitcher: (App: React.ReactNode) => void
