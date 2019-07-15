@@ -76,7 +76,7 @@ export interface ReactotronReactNative {
   overlay: (App: React.ReactNode) => void
   storybookSwitcher: (App: React.ReactNode) => void
   asyncStorageHandler?: any
-  setAsyncStorageHandler?: (asyncStorage: any) => void
+  setAsyncStorageHandler?: (asyncStorage: any) => Reactotron<ReactotronReactNative> & ReactotronReactNative
 }
 
 const reactotron: Reactotron<ReactotronReactNative> & ReactotronReactNative = createClient(DEFAULTS)
@@ -119,8 +119,10 @@ reactotron.useReactNative = (options: UseReactNativeOptions = {}) => {
 
 reactotron.setAsyncStorageHandler = asyncStorage => {
   reactotron.asyncStorageHandler = asyncStorage
+
+  return reactotron
 }
 
-export { trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
+export { asyncStorage, trackGlobalErrors, openInEditor, overlay, networking, storybook, devTools }
 
 export default reactotron

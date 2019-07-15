@@ -1,4 +1,5 @@
-import { Reactotron, ReactotronCore } from "reactotron-core-client"
+import { Reactotron } from "reactotron-core-client"
+import { ReactotronReactNative } from "../reactotron-react-native";
 
 export interface AsyncStorageOptions {
   ignore?: string[]
@@ -8,7 +9,7 @@ const PLUGIN_DEFAULTS: AsyncStorageOptions = {
   ignore: [],
 }
 
-export default <ReactotronSubtype = ReactotronCore>(options: AsyncStorageOptions) => (reactotron: Reactotron<ReactotronSubtype> & ReactotronSubtype) => {
+export default <ReactotronSubtype = ReactotronReactNative>(options: AsyncStorageOptions) => (reactotron: Reactotron<ReactotronSubtype> & ReactotronReactNative) => {
   // setup configuration
   const config = Object.assign({}, PLUGIN_DEFAULTS, options || {})
   const ignore = config["ignore"] || PLUGIN_DEFAULTS.ignore
