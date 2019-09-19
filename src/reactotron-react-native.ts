@@ -74,7 +74,7 @@ export interface ReactotronReactNative {
     options?: UseReactNativeOptions
   ) => Reactotron<ReactotronReactNative> & ReactotronReactNative
   overlay: (App: React.ReactNode) => void
-  storybookSwitcher: (App: React.ReactNode) => void
+  storybookSwitcher: (App: React.ReactNode) => (Root: React.ReactNode) => React.ReactNode
   asyncStorageHandler?: any
   setAsyncStorageHandler?: (asyncStorage: any) => Reactotron<ReactotronReactNative> & ReactotronReactNative
 }
