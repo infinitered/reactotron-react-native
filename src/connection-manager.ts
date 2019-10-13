@@ -1,19 +1,18 @@
 import { NativeModules } from "react-native"
 
 export default class ConnectionManager {
-  // private webSocket: WebSocket
+  private webSocket: any
   private flipperConnection: any
 
-  // TODO: Implement a Send
-  // TODO: Implement `on` - "open", "close", "message"
-  // TODO: Implement close
   constructor(path?: string) {
-    // this.webSocket = new WebSocket(path)
+    this.webSocket = new WebSocket(path)
     this.flipperConnection = NativeModules.Reactotron
   }
 
   send(payload: any) {
-    // this.webSocket.send(payload)
+    if (this.webSocket.readyState === 1) {
+      this.webSocket.send(payload)
+    }
 
     if (this.flipperConnection) {
       this.flipperConnection.sendCommand("command", JSON.parse(payload))
@@ -21,14 +20,20 @@ export default class ConnectionManager {
   }
 
   on(event: "open" | "close" | "message", callback: any) {
-    if (event === 'open') {
-      // TODO: Handle the websocket
-
+    if (event === "open") {
       if (this.flipperConnection) {
         callback()
       }
+
+      this.webSocket.onopen = callback
+    } else if (event === "close") {
+      this.webSocket.onclose = callback
+    } else if (event === "message") {
+      this.webSocket.onmessage = evt => callback(evt.data)
     }
   }
 
-  close() {}
+  close() {
+    this.webSocket.close()
+  }
 }
