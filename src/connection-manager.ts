@@ -27,7 +27,11 @@ export default class ConnectionManager {
 
       this.webSocket.onopen = callback
     } else if (event === "close") {
-      this.webSocket.onclose = callback
+      this.webSocket.onclose = () => {
+        if (!this.flipperConnection) {
+          callback()
+        }
+      }
     } else if (event === "message") {
       this.webSocket.onmessage = evt => callback(evt.data)
     }
