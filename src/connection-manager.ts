@@ -1,4 +1,4 @@
-import { NativeModules } from "react-native"
+import { NativeEventEmitter, NativeModules } from "react-native"
 
 export default class ConnectionManager {
   private webSocket: any
@@ -34,6 +34,14 @@ export default class ConnectionManager {
       }
     } else if (event === "message") {
       this.webSocket.onmessage = evt => callback(evt.data)
+
+      if (this.flipperConnection) {
+        const flipperConnectionEmitter = new NativeEventEmitter(NativeModules.Reactotron)
+
+        flipperConnectionEmitter.addListener("CommandReceived", command => {
+          callback(command)
+        })
+      }
     }
   }
 
