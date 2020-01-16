@@ -35,4 +35,13 @@ export default [
     plugins: getPlugins(),
     external: EXTERNALS,
   },
+  {
+    input: "src/flipper-connection-manager.ts",
+    output: {
+      file: "dist/flipper.js",
+      format: "cjs",
+    },
+    plugins: getPlugins(),
+    external: EXTERNALS,
+  },
 ]
