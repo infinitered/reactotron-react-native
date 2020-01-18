@@ -43,6 +43,9 @@
     "reactotron-core-client": "2.8.9",
     "rn-host-detect": "1.1.5"
   },
+  "optionalDependencies": {
+    "react-native-flipper": "^0.0.1"
+  },
   "devDependencies": {
     "@babel/core": "7.6.2",
     "@babel/plugin-proposal-class-properties": "7.5.5",
@@ -69,6 +72,7 @@
     "prettier": "1.18.2",
     "react": "16.9.0",
     "react-native": "0.61.1",
+    "react-native-flipper": "^0.0.1",
     "rollup": "1.21.4",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-babel-minify": "9.1.0",

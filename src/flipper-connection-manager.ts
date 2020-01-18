@@ -1,4 +1,4 @@
-import { addPlugin } from "./react-native-flipper" // TODO: Switch to not using the one locally...
+import { addPlugin } from "react-native-flipper"
 
 import ConnectionManager from "./connection-manager"
 

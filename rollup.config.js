@@ -18,6 +18,7 @@ function getPlugins() {
 
 const EXTERNALS = [
   "reactotron-core-client",
+  "react-native-flipper",
   "react",
   "react-native",
   "react-native/Libraries/Network/XHRInterceptor",
