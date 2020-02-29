@@ -46,9 +46,8 @@ export default class FlipperConnectionManager {
   }
 
   send(payload: any) {
-    const parsedPayload = JSON.parse(payload)
-    this.baseConnectionManager.send(parsedPayload)
-    this.flipperConnection.send("Command", parsedPayload)
+    this.baseConnectionManager.send(payload)
+    this.flipperConnection.send("Command", JSON.parse(payload))
   }
 
   on(event: "open" | "close" | "message", callback: any) {
