@@ -9732,10 +9732,10 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-native-flipper@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.0.1.tgz#0ab983343f2243ed266b0928665a284e55d125bd"
-  integrity sha512-CXlv55ZlO64XB9+ziGyizWge+xJl+RYnqt3fl4i6Fivw2oZwzrDhTxB7tZT1LyRaQUaZhcbOFbDLTHVS2PiLNg==
+react-native-flipper@^0.32.2:
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.32.2.tgz#74b1662828e45362941d7fac7755f38a6ff4cc89"
+  integrity sha512-aaZux0IUD3czj4PfqM1d7DAk3cHqF+mh5eeUwtsSS6Zc58wdRRrZAyjdin5DDnqP83zoesaa3hyUDVL9v4EFtw==
 
 react-native@0.61.5:
   version "0.61.5"
