@@ -44,7 +44,7 @@
     "rn-host-detect": "1.2.0"
   },
   "optionalDependencies": {
-    "react-native-flipper": "^0.34.0"
+    "react-native-flipper": "^0.98.0"
   },
   "devDependencies": {
     "@babel/core": "7.14.6",
@@ -72,7 +72,7 @@
     "prettier": "2.3.2",
     "react": "16.14.0",
     "react-native": "0.63.4",
-    "react-native-flipper": "0.34.0",
+    "react-native-flipper": "0.98.0",
     "rollup": "2.53.2",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-babel-minify": "10.0.0",
