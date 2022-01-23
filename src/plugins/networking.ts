@@ -76,7 +76,7 @@ export default <ReactotronSubtype = ReactotronCore>(pluginConfig: NetworkingOpti
 
     // fetch and clear the request data from the cache
     const rid = xhr._trackingName
-    const cachedRequest = requestCache[rid] || {}
+    const cachedRequest = requestCache[rid] || { xhr }
     requestCache[rid] = null
 
     // assemble the request object
