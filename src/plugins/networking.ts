@@ -112,7 +112,7 @@ export default <ReactotronSubtype = ReactotronCore>(pluginConfig: NetworkingOpti
       }
 
       // send this off to Reactotron
-      ;(reactotron as any).apiResponse(tronRequest, tronResponse, stopTimer()) // TODO: Fix
+      ;(reactotron as any).apiResponse(tronRequest, tronResponse, stopTimer ? stopTimer() : null) // TODO: Fix
     }
 
     // can we use the real response?
